@@ -1,5 +1,8 @@
 package top.qjyoung.mars;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 /**
  * @author QiaoJianYong
  * @date 9:56 PM 2018/12/7
@@ -10,6 +13,7 @@ package top.qjyoung.mars;
 public class MarsExplorer {
     private static Integer x, y, boundX, boundY;
     private static Direction direction;
+    private static Integer readIndex = 0;
     
     public static void setBound(Integer boundX, Integer boundY) {
         MarsExplorer.boundX = boundX;
@@ -83,7 +87,7 @@ public class MarsExplorer {
         System.out.println(String.format("(%s,%s,%s)", x, y, direction));
     }
     
-    public static void main(String[] args) {
+    public static void test() {
         setBound(5, 5);
 //        LMLMLMLMM
         init(1, 2, Direction.getInstance("N"));
@@ -102,6 +106,8 @@ public class MarsExplorer {
         move();
         move();
         print();
+        System.out.println();
+
 //        33E MMRMMRMRRM
         init(3, 3, Direction.getInstance("E"));
         move();
@@ -115,5 +121,33 @@ public class MarsExplorer {
         rotate(Motion.R);
         move();
         print();
+    }
+    
+    public static void main(String[] args) throws Exception {
+//        test();
+        BufferedReader reader = new BufferedReader(new FileReader("src/top/qjyoung/mars/cmd.txt"));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            readIndex++;
+            if (readIndex == 1) {
+                String[] strings = line.trim().split(" ");
+                setBound(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
+            } else if (readIndex % 2 == 0) {
+                String[] strings = line.trim().split(" ");
+                init(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Direction.getInstance(strings[2]));
+            } else if (readIndex % 2 != 0) {
+                String[] strings = line.split("");
+                for (String string : strings) {
+                    if (string.equals("M")) {
+                        move();
+                    } else {
+                        rotate(Motion.getInstance(string));
+                    }
+                }
+                print();
+            } else {
+                throw new RuntimeException("the cmd.txt has wrongs, not match the regulation!");
+            }
+        }
     }
 }
