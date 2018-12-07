@@ -149,5 +149,7 @@ public class MarsExplorer {
                 throw new RuntimeException("the cmd.txt has wrongs, not match the regulation!");
             }
         }
+    
+        reader.close();
     }
 }
