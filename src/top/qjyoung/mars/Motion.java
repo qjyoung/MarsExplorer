@@ -9,4 +9,13 @@ public enum Motion {
     L,
     R,
     ;
+    
+    public static Motion getInstance(String name) {
+        for (Motion motion : Motion.values()) {
+            if (motion.name().equals(name)) {
+                return motion;
+            }
+        }
+        throw new RuntimeException("not found!");
+    }
 }

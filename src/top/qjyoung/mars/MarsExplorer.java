@@ -8,8 +8,13 @@ package top.qjyoung.mars;
  * 既然 是有序的 那么都用静态变量吧
  */
 public class MarsExplorer {
-    private static Integer x, y;
+    private static Integer x, y, boundX, boundY;
     private static Direction direction;
+    
+    public static void setBound(Integer boundX, Integer boundY) {
+        MarsExplorer.boundX = boundX;
+        MarsExplorer.boundY = boundY;
+    }
     
     public static void init(Integer x, Integer y, Direction direction) {
         MarsExplorer.x = x;
@@ -69,6 +74,9 @@ public class MarsExplorer {
                 y += 1;
                 break;
         }
+        if (x > boundX || y > boundY || y < 0 || x < 0) {
+            throw new RuntimeException("掉下悬崖啦！");
+        }
     }
     
     public static void print() {
@@ -76,6 +84,7 @@ public class MarsExplorer {
     }
     
     public static void main(String[] args) {
+        setBound(5, 5);
 //        LMLMLMLMM
         init(1, 2, Direction.getInstance("N"));
         print();
