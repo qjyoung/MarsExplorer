@@ -64,20 +64,8 @@ public class MarsExplorer {
     }
     
     public static void move() {
-        switch (MarsExplorer.direction) {
-            case E:
-                x += 1;
-                break;
-            case S:
-                y -= 1;
-                break;
-            case W:
-                x -= 1;
-                break;
-            case N:
-                y += 1;
-                break;
-        }
+        x += direction.getX();
+        y += direction.getY();
         if (x > boundX || y > boundY || y < 0 || x < 0) {
             throw new RuntimeException("掉下悬崖啦！");
         }
@@ -149,7 +137,7 @@ public class MarsExplorer {
                 throw new RuntimeException("the cmd.txt has wrongs, not match the regulation!");
             }
         }
-    
+        
         reader.close();
     }
 }
