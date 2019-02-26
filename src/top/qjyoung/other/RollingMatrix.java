@@ -1,4 +1,4 @@
-package top.qjyoung.mars;
+package top.qjyoung.other;
 
 /**
  * @author QiaoJianYong
