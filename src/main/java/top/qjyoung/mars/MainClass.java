@@ -48,7 +48,7 @@ public class MainClass {
 //        test();
 //        System.out.println();
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/top/qjyoung/mars/cmd.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/java/top/qjyoung/mars/cmd.txt"));
         String line = reader.readLine();
         MarsExplorer marsExplorer;
         String[] strings_1 = line.trim().split(" ");
