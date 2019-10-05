@@ -1,12 +1,9 @@
 package top.qjyoung.concurrent;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class TestSingleThreadExecutor {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         //创建一个可重用固定线程数的线程池
         // ExecutorService pool = Executors.newFixedThreadPool(2);
         
@@ -21,12 +18,19 @@ public class TestSingleThreadExecutor {
         Thread tt3 = new MyThread("线程3：我进入缓存队列");
         Thread tt4 = new MyThread("线程4：我进入缓存队列");
         Thread tt5 = new MyThread("线程5：我由非核心线程执行");
-        
+
 //        Runnable task = () -> System.out.println("task .....");
-    
+        
         //将线程放入池中并执行
-        pool.submit(tt1);
-        pool.execute(tt2);
+        final Future<?> future = pool.submit(tt1);
+        while (true) {
+            if (future.isDone()) {
+                System.out.println("done " + future.get());
+                break;
+            }
+        }
+        final CompletableFuture<Void> future2 = CompletableFuture.runAsync(tt2, pool);
+        
         pool.execute(tt3);
         pool.execute(tt4);
         pool.submit(tt5);
